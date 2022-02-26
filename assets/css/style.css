@@ -1,0 +1,15 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+  background-size: cover;
+  background-image: linear-gradient(to right, #3b6dc2, #281d6d);
+}
+
+h1 {
+  color: whitesmoke;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
