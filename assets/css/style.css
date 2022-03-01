@@ -27,14 +27,14 @@ h2 {
 
 main {
   margin: 0px 7px;
-  width: 94%;
+  /* width: 100%; */
 }
 
 .card {
   margin-right: 20px;
 }
 
-.btn {
+#btn {
   width: 100%;
   background-color: #5aa2e9;
   color: white;
@@ -43,7 +43,7 @@ main {
   padding: 4px 3px;
 }
 
-.form-input {
+.city-input {
   width: 100%;
   padding: 2%;
   margin: 10px 0;
@@ -51,10 +51,29 @@ main {
 }
 
 .justify-space-between {
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .flex-row {
   display: flex;
   flex-wrap: wrap;
+}
+
+.row {
+  background-size: cover;
+}
+
+.col-md-8 {
+  /* flex: 0 0 calc(100% * 8 / 12 - 2%) */
+  flex: 0 0 calc(76%);
+}
+
+.daily-container {
+  border: 1px solid black;
+}
+
+.subtitle {
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: 200px;
 }
