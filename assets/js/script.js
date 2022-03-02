@@ -61,12 +61,29 @@ function getCity(city) {
   $.ajax({ url: apiUrl, type: "GET" }).then(function (response) {
     // weather icon
     var iconLocation = response.weather[0].icon;
-
+    // set the attribute and value, $(selector).attr(attribute,value)
     var iconApi = "https://openweathermap.org/img/wn" + iconLocation + "@2x.png";
     var iconImg = $("<img>");
-    
-    iconImg.attr("src", iconApi);
+    iconImg.attr("src", iconApi); 
 
+    // display searched city, current date as well as the icon
+    $("current-city").text(response.name + " (" + currentDate + ")");
+    $("current-city").append(iconImg);
+    // convert temperature
+    var farenheit = (response.main.temp - 273.15) * 1.8 +32;
+    $(".farenheit").text("Temperature (Kelvin) " + farenheit);
+    // display temperature
+    $("temp").text("Temp: " + response.main.temp + " °F");
+    // display wind
+    $("wind").text("Wind: " + response.main.wind + " MPH");
+    // display humidity
+    $("humidity").text("Humidity: " + response.main.humidity + " %");
+          // $("uvindex").text("UV Index: " + response.main.)
+    // dipslay UV Index via retrieving latitude and longitude from API
+    uvIndex(response.coord.lat, response.coord.lon); 
+
+    forecast(city);
+    input.val("");
 
   });  
 
@@ -74,3 +91,19 @@ function getCity(city) {
 }
 
 // displayCities
+function displayCities() {
+  var limit;
+
+  if (cities.length < 10) {
+    limit = cities.length;
+  } else {
+    limit = 10;
+  }
+
+}
+
+
+// 5 day forecast
+
+
+// UV index
