@@ -50,10 +50,6 @@ main {
   font-size: 1.2rem;
 }
 
-.justify-space-between {
-  /* justify-content: space-between; */
-}
-
 .flex-row {
   display: flex;
   flex-wrap: wrap;

@@ -1,88 +1,76 @@
 const api = "https://api.openweathermap.org/data/2.5/weather?q=";
 const apiKey = "&appid=570286871b5c0890a480ac56f524ebc1";
 
-var submitBtn = document.getElementById("btn");
-var city = [];
+// var submitBtn = document.getElementById("btn");
 
-var cityFormEl = document.querySelector("#user-form")
-var cityInputEl = document.querySelector("#city")
+var cities = [];
+
+// here it makes sense to use 'cities' rather than 'city' as I am retrieving 200,000 cities from API
 
 // save data to local storage
 function save() {
-  localStorage.setItem("city", JSON.stringify(city));
+  localStorage.setItem("cities", JSON.stringify(cities));
 }
 
 // retrieve data to display
 function load() {
-  cities = JSON.parse(localStorage.getItem("city")) || [];
+  cities = JSON.parse(localStorage.getItem("cities")) || [];
 }
 
-// collect city input
 
-// $(document).ready(function () {
-//   load();
+// jQuery selector and method to make function available after document is loaded
+$(document).ready(function () {
+  load();
 
-//   if (cities[0]) {
-//     getCity(cities[cities.length - 1]);
-//   }
+  if (cities[0]) {
+    getCity(cities[cities.length - 1]); // define getCity below
+  }
+  // calls the function
+  displayCities();
 
-//   displayCities();
-// }
+  $("#btn").on("click", function (event) {
+    event.preventDefault();
 
-// var getCityInfo = function() {
-//   console.log("function was called");
-// };
+    // manipulating the class on input element >> class
+    var input = $(".city-input")
+    // use city here as we are retrieving 1 city upon input
+    // .val() will set the value of the <input> field (jQuery method)
+    var city = input.val();
 
-// getCityInfo();
+    if (!cities.includes(city)) { // ! invert value ,, city = searchvalue
+      cities.push(city);
+      save ();
+    }
 
-// parse for info I want from api url
+    // call functions
+    displayCities();
+    getCity(city);
 
-// get city weather
+  });
 
-// var cityInputEl = document.querySelector("#city");
+});
 
-// var formSubmitHandler = function(event) {
-//   // prevent page from refreshing
-//   // event.preventDefault();
-//   // get value from input element
-//   var city = cityInputEl.value.trim();
+// get city weather conditions
+function getCity(city) {
+  // moment.js date format
+  var currentDate = moment().format("LL");
+  // API URL
+  var apiUrl = "api" + city + "&units=imperial" + "apiKey";
 
-//   if (city) {
-//     getCityInfo(city);
-//   } else {
-//     alert("Please enter a city");
-//   }
-// };
+  // retrieve API data using AJAX
+  $.ajax({ url: apiUrl, type: "GET" }).then(function (response) {
+    // weather icon
+    var iconLocation = response.weather[0].icon;
 
-// var getCityInfo = function(city) {
-//   // format the weather api url
-//   var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=name&appid=570286871b5c0890a480ac56f524ebc1";
-
-// api.openweathermap.org/data/2.5/weather?q={cityname}&appid=570286871b5c0890a480ac56f524ebc1&units=metric";
+    var iconApi = "https://openweathermap.org/img/wn" + iconLocation + "@2x.png";
+    var iconImg = $("<img>");
+    
+    iconImg.attr("src", iconApi);
 
 
+  });  
 
-  // make a request to url
-//   fetch(apiUrl)
-//     .then(function(response) {
-//       // request was successful
-//       if (response.ok) {
-//         console.log(response)
-//         response.json().then(function(data) {
-//           console.log(data);
-//           displayCity(data, name);
-//         });
-//       } else {
-//         alert("Error: " + response.statusText);
-//       }
-//     })
-//     .catch(function(error) {
-//       alert("Unable to connect to weather data");
-//     });
-// };
 
-// var displayCity = function(name, searchTerm) {
-  
-// }
+}
 
-userFormEl.addEventListener("submit", formSubmitHandler);
+// displayCities
