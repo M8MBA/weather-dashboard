@@ -5,7 +5,11 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
   <title>Weather Dashboard</title>
 
 </head>
@@ -16,41 +20,49 @@
     <h1 class="app-title">Weather Dashboard</h1>
   </header>
 
-  <main class="flex-row justify-space-between">
-    <div class="col-12 col-md-4">
-      <div class="card">
+  <main class="container">
+    <div class="row">
+      <div class="col-lg-3 border-right border-silver" id="cityCol"><br />
         <h2>Search for a City:</h2>
-        <form id="user-form" class="card-body">
-          <input name="city" id="city" type="text" autofocus="true" class="city-input"/>
-          <button type="submit" id="btn">Search</button>
+        <form class="form-inline mt-2 mt-md-0">
+          <input name="city" id="city" type="text" autofocus="true" class="city-input" />
+          <button type="submit" id="btn" class="btn btn-outline-success my-2 my-ms-0">Search</button>
         </form>
+        <!-- display previously searched cities -->
+        <div id="city-history" class="city-history"></div>
+      </div>
+
+      <!-- Current/Daily Forecast -->
+      <div class="col-lg-9 pb-5">
+        <div class="row" id="current-weather">
+          <div class="col-lg-12">
+            <h2 class="current-city"></h2>
+            <p id="temp"></p>
+            <p id="wind"></p>
+            <p id="humidity"></p>
+            <p id="uvindex"></p>
+          </div>
+        </div>
+        <!-- 5 Day Forecast -->
+        <div class="row">
+          <div class="col">
+            <h3>5-Day Forecast:</h3>
+          </div>
+        </div>
+        <div class="row justify-content-between" id="forecast">
+        </div>
       </div>
     </div>
-
-      <div class="col-12 col-md-8">
-
-        <div class="daily-container">
-          <h2 class="current-city">City:<span id="city-search-term"></span></h2>
-          <div id="city-container" class="daily-conditions">
-            <ul class="list-group list-unstyled">
-              <li class="list-group-item" id="temp"></li>
-              <li class="list-group-item" id="wind"></li>
-              <li class="list-group-item" id="humidity"></li>
-              <li class="list-group-item" id="uvindex"></li>
-            </ul>
-          </div>
-        </div>
-        <div class="five-day-forecast">
-          <h3 class="five-day">5-Day Forecast:</h3>
-          <div id="five-day-container" class="">
-  
-          </div>
-        </div>
-      </div>
-
   </main>
 
   <footer>
+    <!-- Code Integration jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- CDN for moment.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./assets/js/script.js"></script>
   </footer>
 
