@@ -23,6 +23,7 @@ h1 {
 
 h2 {
   margin: 0;
+  font-size: small;
 }
 
 main {
@@ -50,6 +51,18 @@ main {
   font-size: 1.2rem;
 }
 
+.city-col {
+  text-align: center;
+  width: 100%;
+  background-color: lightgray;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  padding: 4px 3px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
 .flex-row {
   display: flex;
   flex-wrap: wrap;
@@ -64,8 +77,12 @@ main {
   flex: 0 0 calc(76%);
 }
 
-.daily-container {
+#current-weather {
   border: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.current-city {
 }
 
 .subtitle {
