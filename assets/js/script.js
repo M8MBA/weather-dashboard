@@ -1,10 +1,11 @@
 var api = "https://api.openweathermap.org/data/2.5/weather?q=";
 var apiKey = "&appid=570286871b5c0890a480ac56f524ebc1";
+var geoApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + apiKey;
 // uv index
 // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 // geo code API
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-// var submitBtn = document.getElementById("btn");
+
 var cities = [];
 cities.reverse();
 // here it makes sense to use 'cities' rather than 'city' as I am retrieving 200,000 cities from API
@@ -40,6 +41,22 @@ $(document).ready(function () {
     getCity(city);
   });
 });
+// geocode(lat & lon)
+function getGeo(city) {
+  var geoUrl = geoApi; // geoApi defined at top of page
+
+  $.ajax({ url: geoUrl, type: "GET" }).then(function (response) {
+    console.log(response);
+
+    var lat = response.lat;
+    var lon = response.lon;
+
+    lat(city);
+    lon(city);
+
+  })
+}
+
 // get city weather conditions
 function getCity(city) {
   // moment.js date format
@@ -52,20 +69,15 @@ function getCity(city) {
   $.ajax({ url: apiUrl, type: "GET" }).then(function (response) {
     console.log(response);
 
-    var lat = response.coord.lat;
-    var long = response.coord.lon;
-
-    // weather icon JSON path
-    var iconJson = response.weather[0].icon;
-    // weather icon http source
-    var iconHttp = "http://openweathermap.org/img/wn/" + iconJson + "@2x.png";
-    var iconImg = $("<img>");
-    iconImg.attr("src", iconHttp);
-    // display searched city, current date as well as the icon
-    $(".current-city").text(response.name + " (" + currentDate + ")");
-    $(".current-city").append(iconImg);
+    // ICON
+    var iconJson = response.weather[0].icon; // path
+    var iconHttp = "http://openweathermap.org/img/wn/" + iconJson + "@2x.png"; // source
+    var iconImg = $("<img>").addClass("icon"); // create element
+    iconImg.attr("src", iconHttp); // .attr() gives value to img element
+    $(".current-city").text(response.name + " (" + currentDate + ")"); // display city, current temp, & icon
+    $(".current-city").append(iconImg); // append icon
     // convert temperature
-    var farenheit = (response.main.temp - 273.15) * 1.8 +32;
+    var farenheit = (response.main.temp - 273.15) * 1.8 + 32;
     // $("#farenheit").text("Temperature (Kelvin) " + farenheit);
     // display temperature
     $("#temp").text("Temp: " + response.main.temp + " °F");
@@ -73,32 +85,33 @@ function getCity(city) {
     $("#wind").text("Wind: " + response.wind.speed + " MPH");
     // display humidity
     $("#humidity").text("Humidity: " + response.main.humidity + " %");
-    $("#uvindex").text("UV Index: ");
-    // dipslay UV Index via retrieving latitude and longitude from API
-    
-    uvIndex(response.coord.lat, response.coord.lon); 
+    // displays uv index
+    $("#uvindex").text("UV Index: " + getUvi); // ?????
+
+    getUvi(response.lat, response.lon); // ?????
     forecast(city);
     input.val("");
   });  
 }
 
-// get Latitude & Longitude
-function getLatLong(city) {
- // Latitude & Longitude API
- var latLongApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + apiKey;
+// // get Latitude & Longitude
+// function getLatLong(city) {
+//  // Latitude & Longitude API
+//  var latLongApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + apiKey;
 
-   // retrieve API data using AJAX
-   $.ajax({ url: latLongApi, type: "GET" }).then(function (response) {
-    console.log(response);
+//    // retrieve API data using AJAX
+//    $.ajax({ url: latLongApi, type: "GET" }).then(function (response) {
+//     console.log(response);
 
-    var lat = response.coord.lat;
-    var long = response.coord.lon;
-  })
-}
+//     var lat = response.coord.lat;
+//     var long = response.coord.lon;
+//   })
+// }
 
 // display searched Cities
 function displayCities() {
   var limit;
+
   if (cities.length < 10) {
     limit = cities.length;
   } else {
@@ -107,8 +120,7 @@ function displayCities() {
   $("#city-history").html("");
   for (var c = 0; c < limit; c++) {
     var cityHistory = $("<div>");
-    cityHistory.addClass("city-col").css({
-    });
+    cityHistory.addClass("city-col")
     cityHistory.html(cities[c]);
     $("#city-history").prepend(cityHistory);
     //OnClick event on each previously searched city
@@ -118,26 +130,25 @@ function displayCities() {
     });
   }
 }
-// getLatLong
-function getLatLong(lat, lon) {}
-  var latLongApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + apiKey;
+
+// // getLatLong
+// function getLatLong(lat, lon) {}
+//   var latLongApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + apiKey;
     
 
 
-//getUV;
-function getUV(lat, lon) {
-  var uvIndexURL =
-    "https://api.openweathermap.org/data/2.5/uvi/forecast?" +
-    apiKey +
-    "&lat=" +
-    lat +
-    "&lon=" +
-    lon +
-    "&cnt=1";
-  $.ajax({ url: uvIndexURL, type: "GET" }).then(function (response) {
-    $("#uv").text("UV-index : " + response[0].value);
+//getUV; https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}; lat lon apikey required
+function getUvi(lat, lon) {
+  var uviUrl = "https://api.openweathermap.org/data/2.5/onecall?" 
+    + "lat=" + lat + "&lon=" + lon + apiKey;
+
+  $.ajax({ url: uviUrl, type: "GET" }).then(function (response) {
+    console.log(response);
+    var uvi = response.current.uvi;
+    $("#uvindex").text("UV Index: " + response.current.uvi);
   });
 }
+
 // 5 day forecast
 function forecast(city) {
   var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey;
@@ -150,31 +161,34 @@ function forecast(city) {
       var temp = ((list[i].main.temp - 273.15) * 1.8 + 32).toFixed(2);
       var iconId = list[i].weather[0].icon;
       var humidity = list[i].main.humidity;
+      var wind = list[i].wind.speed;
       var date = new Date(list[i].dt_txt);
       var day = date.getDate();
       var month = date.getMonth();
       var year = date.getFullYear();
-      var formatedDate = `${month + 1}/${day}/${year}`;
+      var formatedDate = `${month + 1}/${day - 1}/${year}`;
       // Creating and storing a div tag
       var col = $("<div>");
       col.addClass("col");
       var mycard = $("<div>");
-      mycard.addClass("card");
+      mycard.addClass("card")
       col.append(mycard);
       // Creating a paragraph tag with the response item
-      var p = $("<p>").text(formatedDate);
+      var p = $("<p>").text(formatedDate).addClass("forecast-date");
       // Creating and storing an image tag
       var iconUrl = "https://openweathermap.org/img/wn/" + iconId + "@2x.png";
-      var weatherImage = $("<img>");
+      var weatherImage = $("<img>").addClass("icon");
       // Setting the src attribute of the image to a property pulled off the result item
       weatherImage.attr("src", iconUrl);
-      var p1 = $("<p>").text("Temp: " + temp + "°F");
-      var p2 = $("<p>").text("Humidity: " + humidity + "%");
+      var p1 = $("<p>").text("Temp: " + temp + " °F");
+      var p2 = $("<p>").text("Wind: " + wind + " MPH");
+      var p3 = $("<p>").text("Humidity: " + humidity + " %");
       // Appending the paragraph and image tag to mycard
       mycard.append(p);
       mycard.append(weatherImage);
       mycard.append(p1);
       mycard.append(p2);
+      mycard.append(p3);
       // Prependng the col to the HTML page in the "#forecast" div
       $("#forecast").prepend(col);
     }

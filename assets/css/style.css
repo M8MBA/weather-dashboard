@@ -21,18 +21,28 @@ h1 {
   margin: 20px 0 5px 0;
 }
 
-h2 {
-  margin: 0;
-  font-size: small;
+p {
+  padding-left: 4px;
+  color: white;
 }
 
-main {
-  margin: 0px 7px;
-  /* width: 100%; */
+.current-city {
+  font-size: x-large;
+  font-weight: bold;
 }
 
-.card {
-  margin-right: 20px;
+.font {
+  color: black;
+}
+
+.search-city {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.five-day {
+  font-size: large;
+  font-weight: bold;
 }
 
 #btn {
@@ -40,7 +50,6 @@ main {
   background-color: #5aa2e9;
   color: white;
   border-radius: 5px;
-  border: none;
   padding: 4px 3px;
 }
 
@@ -55,11 +64,11 @@ main {
   text-align: center;
   width: 100%;
   background-color: lightgray;
-  color: white;
+  color: black;
   border-radius: 5px;
   border: none;
   padding: 4px 3px;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
   cursor: pointer;
 }
 
@@ -67,11 +76,11 @@ main {
   display: flex;
   flex-wrap: wrap;
 }
-
+/*
 .row {
   background-size: cover;
 }
-
+*/
 .col-md-8 {
   /* flex: 0 0 calc(100% * 8 / 12 - 2%) */
   flex: 0 0 calc(76%);
@@ -82,11 +91,28 @@ main {
   margin-bottom: 20px;
 }
 
-.current-city {
-}
-
 .subtitle {
   margin-top: 5px;
   margin-left: 5px;
   margin-bottom: 200px;
+}
+
+.form-inline {
+  padding-bottom: 5px;
+  border-bottom: 2px solid gray;
+  margin-bottom: 12px;
+}
+
+.icon {
+  max-height: 50px;
+  max-width: 50px;
+}
+
+div.card {
+  background-color: #708090;
+}
+
+.forecast-date {
+  margin-bottom: 0;
+  font-weight: bold;
 }
