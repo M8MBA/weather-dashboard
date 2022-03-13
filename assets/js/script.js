@@ -91,7 +91,7 @@ function getCity(city) {
     console.log(response);
     getUvi(response.coord.lat, response.coord.lon); // ?????
     forecast(city);
-    input.val("");
+    // input.val("");
   });  
 }
 
