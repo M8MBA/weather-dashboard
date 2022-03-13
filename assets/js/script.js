@@ -126,8 +126,24 @@ function getUvi(lat, lon) {
   $.ajax({ url: uviUrl, type: "GET" }).then(function (response) {
     console.log(response);
     var uvi = response.current.uvi;
-    $("#uvindex").text("UV Index: " + response.current.uvi);
+    $("#uvindex").text( uvi);
     console.log(1);
+
+    // uv background color
+    let uvcolor = uvi;
+      $("#uvindex").removeClass();
+
+    if (uvcolor < 2) {
+      $("#uvindex").addClass("green");
+      console.log('green')
+    }  else if (uvcolor <= 7) {
+      $("#uvindex").addClass("yellow");
+      console.log('yellow');
+    } else if (uvcolor > 7) {
+      $("#uvindex").addClass("red");
+      console.log('red');
+    }
+
   });
 }
 

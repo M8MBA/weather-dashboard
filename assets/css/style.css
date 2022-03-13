@@ -120,6 +120,23 @@ div.card {
 }
 
 div.col {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+#uvindex {
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.green {
+  background-color: rgb(81, 179, 144);
+}
+
+.yellow {
+  background-color: rgb(248, 221, 46);
+}
+
+.red {
+  background-color: rgb(238, 66, 66);
 }
