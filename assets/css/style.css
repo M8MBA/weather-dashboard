@@ -18,7 +18,7 @@ h1 {
   text-align: center;
   padding-top: 5px;
   padding-bottom: 5px;
-  margin: 20px 0 5px 0;
+  margin: 0px 0 5px 0;
 }
 
 p {
@@ -43,6 +43,8 @@ p {
 .five-day {
   font-size: large;
   font-weight: bold;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 #btn {
@@ -115,4 +117,9 @@ div.card {
 .forecast-date {
   margin-bottom: 0;
   font-weight: bold;
+}
+
+div.col {
+  padding-left: 10px;
+  padding-right: 10px;
 }

@@ -41,21 +41,22 @@ $(document).ready(function () {
     getCity(city);
   });
 });
-// geocode(lat & lon)
-function getGeo(city) {
-  var geoUrl = geoApi; // geoApi defined at top of page
 
-  $.ajax({ url: geoUrl, type: "GET" }).then(function (response) {
-    console.log(response);
+// // geocode(lat & lon)
+// function getGeo(city) {
+//   var geoUrl = geoApi; // geoApi defined at top of page
 
-    var lat = response.lat;
-    var lon = response.lon;
+//   $.ajax({ url: geoUrl, type: "GET" }).then(function (response) {
+//     console.log(response);
 
-    lat(city);
-    lon(city);
+//     var lat = response.lat;
+//     var lon = response.lon;
 
-  })
-}
+//     lat(city);
+//     lon(city);
+
+//   })
+// }
 
 // get city weather conditions
 function getCity(city) {
@@ -86,27 +87,13 @@ function getCity(city) {
     // display humidity
     $("#humidity").text("Humidity: " + response.main.humidity + " %");
     // displays uv index
-    $("#uvindex").text("UV Index: " + getUvi); // ?????
-
-    getUvi(response.lat, response.lon); // ?????
+    // $("#uvindex").text("UV Index: " + getUvi).addClass(); // ?????
+    console.log(response);
+    getUvi(response.coord.lat, response.coord.lon); // ?????
     forecast(city);
     input.val("");
   });  
 }
-
-// // get Latitude & Longitude
-// function getLatLong(city) {
-//  // Latitude & Longitude API
-//  var latLongApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + apiKey;
-
-//    // retrieve API data using AJAX
-//    $.ajax({ url: latLongApi, type: "GET" }).then(function (response) {
-//     console.log(response);
-
-//     var lat = response.coord.lat;
-//     var long = response.coord.lon;
-//   })
-// }
 
 // display searched Cities
 function displayCities() {
@@ -131,12 +118,6 @@ function displayCities() {
   }
 }
 
-// // getLatLong
-// function getLatLong(lat, lon) {}
-//   var latLongApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + apiKey;
-    
-
-
 //getUV; https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}; lat lon apikey required
 function getUvi(lat, lon) {
   var uviUrl = "https://api.openweathermap.org/data/2.5/onecall?" 
@@ -146,6 +127,7 @@ function getUvi(lat, lon) {
     console.log(response);
     var uvi = response.current.uvi;
     $("#uvindex").text("UV Index: " + response.current.uvi);
+    console.log(1);
   });
 }
 
