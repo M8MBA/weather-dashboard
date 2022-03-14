@@ -17,6 +17,7 @@ function load() {
 function save() {
   localStorage.setItem("cities", JSON.stringify(cities));
 }
+
 // jQuery selector and method to make function available after document is loaded
 $(document).ready(function () {
   load();
@@ -41,22 +42,6 @@ $(document).ready(function () {
     getCity(city);
   });
 });
-
-// // geocode(lat & lon)
-// function getGeo(city) {
-//   var geoUrl = geoApi; // geoApi defined at top of page
-
-//   $.ajax({ url: geoUrl, type: "GET" }).then(function (response) {
-//     console.log(response);
-
-//     var lat = response.lat;
-//     var lon = response.lon;
-
-//     lat(city);
-//     lon(city);
-
-//   })
-// }
 
 // get city weather conditions
 function getCity(city) {
@@ -88,7 +73,6 @@ function getCity(city) {
     $("#humidity").text("Humidity: " + response.main.humidity + " %");
     // displays uv index
     // $("#uvindex").text("UV Index: " + getUvi).addClass(); // ?????
-    console.log(response);
     getUvi(response.coord.lat, response.coord.lon); // ?????
     forecast(city);
     // input.val("");
@@ -127,7 +111,6 @@ function getUvi(lat, lon) {
     console.log(response);
     var uvi = response.current.uvi;
     $("#uvindex").text( uvi);
-    console.log(1);
 
     // uv background color
     let uvcolor = uvi;
